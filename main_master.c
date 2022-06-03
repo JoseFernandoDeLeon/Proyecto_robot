@@ -113,7 +113,7 @@ void __interrupt() isr (void){
                 __delay_ms(50);
                 write_EEPROM(0x04, pot_LP2);
                 __delay_ms(50);
-            }            
+            }
         }
         
         else if (!PORTBbits.RB2){
@@ -141,7 +141,7 @@ void __interrupt() isr (void){
                 __delay_ms(50);
                 write_EEPROM(0x08, pot_LP2);
                 __delay_ms(50);
-            }    
+            }
         }
                 
         INTCONbits.RBIF = 0;    // Limpiamos bandera de interrupción RBIF
@@ -150,10 +150,10 @@ void __interrupt() isr (void){
     if(PIR1bits.ADIF){                      // Fue interrupción del ADC?
         
         if (ADCON0bits.CHS == 0b0100){     // Verificamos que AN4 sea el canal seleccionado
-                if (ADRESH <= 107){
+                if (ADRESH <= 87){
                     wheel_flag_r = 1;
                 }
-                else if (ADRESH >= 147){
+                else if (ADRESH >= 167){
                     wheel_flag_r = 2;
                 }
                 else{
@@ -161,10 +161,10 @@ void __interrupt() isr (void){
                 }    
             }
         else if(ADCON0bits.CHS == 0b0101){
-                if (ADRESH <= 107){
+                if (ADRESH <= 87){
                     wheel_flag_l = 1;
                 }
-                else if (ADRESH >= 147){
+                else if (ADRESH >= 167){
                     wheel_flag_l = 2;
                 }
                 else{
@@ -192,7 +192,7 @@ void __interrupt() isr (void){
                 send_data(ADRESH);              
                 __delay_ms(50);                      // Esperamos que el slave reciba el dato y movilice el servo
             }
-            else{}
+        else{}
                 
         }
         PIR1bits.ADIF = 0;                  // Limpiamos bandera de interrupción
@@ -263,65 +263,68 @@ void main(void) {
         }
         
         if (wheel_flag_r == 1){
+
             PORTBbits.RB3 = 1;
             __delay_ms(10);
             PORTBbits.RB4 = 0;
             __delay_ms(10);
-            PORTBbits.RB5 = 1;
+            /*PORTBbits.RB5 = 1;
             __delay_ms(10);
             PORTBbits.RB6 = 0;
-            __delay_ms(10);
+            __delay_ms(10);*/
         }
         else if (wheel_flag_r == 2){
+
             PORTBbits.RB3 = 0;
             __delay_ms(10);
             PORTBbits.RB4 = 1;
             __delay_ms(10);
-            PORTBbits.RB5 = 0;
+           /* PORTBbits.RB5 = 0;
             __delay_ms(10);
             PORTBbits.RB6 = 1;
-            __delay_ms(10);
+            __delay_ms(10);*/
         }
         else{
             PORTBbits.RB3 = 0;
             __delay_ms(10);
             PORTBbits.RB4 = 0;
             __delay_ms(10);
+            /*PORTBbits.RB5 = 0;
+            __delay_ms(10);
+            PORTBbits.RB6 = 0;
+            __delay_ms(10);*/
+        }
+        
+        if (wheel_flag_l == 1){
+
+            PORTBbits.RB5 = 1;
+            __delay_ms(10);
+            PORTBbits.RB6 = 0;
+            __delay_ms(10);
+           /* PORTDbits.RD6 = 1;
+            __delay_ms(10);
+            PORTDbits.RD7 = 0;
+            __delay_ms(10);*/
+        }
+        else if (wheel_flag_l == 2){
+            PORTBbits.RB5 = 0;
+            __delay_ms(10);
+            PORTBbits.RB6 = 1;
+            __delay_ms(10);
+           /* PORTDbits.RD6 = 0;
+            __delay_ms(10);
+            PORTDbits.RD7 = 1;
+            __delay_ms(10);*/
+        }
+        else{
             PORTBbits.RB5 = 0;
             __delay_ms(10);
             PORTBbits.RB6 = 0;
             __delay_ms(10);
-        }
-        
-        if (wheel_flag_l == 1){
-            PORTDbits.RD4 = 1;
-            __delay_ms(10);
-            PORTDbits.RD5 = 0;
-            __delay_ms(10);
-            PORTDbits.RD6 = 1;
+            /*PORTDbits.RD6 = 0;
             __delay_ms(10);
             PORTDbits.RD7 = 0;
-            __delay_ms(10);
-        }
-        else if (wheel_flag_l == 2){
-            PORTDbits.RD4 = 0;
-            __delay_ms(10);
-            PORTDbits.RD5 = 1;
-            __delay_ms(10);
-            PORTDbits.RD6 = 0;
-            __delay_ms(10);
-            PORTDbits.RD7 = 1;
-            __delay_ms(10);
-        }
-        else{
-            PORTDbits.RD4 = 0;
-            __delay_ms(10);
-            PORTDbits.RD5 = 0;
-            __delay_ms(10);
-            PORTDbits.RD6 = 0;
-            __delay_ms(10);
-            PORTDbits.RD7 = 0;
-            __delay_ms(10);
+            __delay_ms(10);*/
         }
         
     }

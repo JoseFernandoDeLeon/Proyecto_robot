@@ -2751,10 +2751,10 @@ void __attribute__((picinterrupt(("")))) isr (void){
     if(PIR1bits.ADIF){
 
         if (ADCON0bits.CHS == 0b0100){
-                if (ADRESH <= 107){
+                if (ADRESH <= 87){
                     wheel_flag_r = 1;
                 }
-                else if (ADRESH >= 147){
+                else if (ADRESH >= 167){
                     wheel_flag_r = 2;
                 }
                 else{
@@ -2762,10 +2762,10 @@ void __attribute__((picinterrupt(("")))) isr (void){
                 }
             }
         else if(ADCON0bits.CHS == 0b0101){
-                if (ADRESH <= 107){
+                if (ADRESH <= 87){
                     wheel_flag_l = 1;
                 }
-                else if (ADRESH >= 147){
+                else if (ADRESH >= 167){
                     wheel_flag_l = 2;
                 }
                 else{
@@ -2793,7 +2793,7 @@ void __attribute__((picinterrupt(("")))) isr (void){
                 send_data(ADRESH);
                 _delay((unsigned long)((50)*(500000/4000.0)));
             }
-            else{}
+        else{}
 
         }
         PIR1bits.ADIF = 0;
@@ -2864,65 +2864,68 @@ void main(void) {
         }
 
         if (wheel_flag_r == 1){
+
             PORTBbits.RB3 = 1;
             _delay((unsigned long)((10)*(500000/4000.0)));
             PORTBbits.RB4 = 0;
             _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTBbits.RB5 = 1;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTBbits.RB6 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
+
+
+
+
         }
         else if (wheel_flag_r == 2){
+
             PORTBbits.RB3 = 0;
             _delay((unsigned long)((10)*(500000/4000.0)));
             PORTBbits.RB4 = 1;
             _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTBbits.RB5 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTBbits.RB6 = 1;
-            _delay((unsigned long)((10)*(500000/4000.0)));
+
+
+
+
         }
         else{
             PORTBbits.RB3 = 0;
             _delay((unsigned long)((10)*(500000/4000.0)));
             PORTBbits.RB4 = 0;
             _delay((unsigned long)((10)*(500000/4000.0)));
+
+
+
+
+        }
+
+        if (wheel_flag_l == 1){
+
+            PORTBbits.RB5 = 1;
+            _delay((unsigned long)((10)*(500000/4000.0)));
+            PORTBbits.RB6 = 0;
+            _delay((unsigned long)((10)*(500000/4000.0)));
+
+
+
+
+        }
+        else if (wheel_flag_l == 2){
+            PORTBbits.RB5 = 0;
+            _delay((unsigned long)((10)*(500000/4000.0)));
+            PORTBbits.RB6 = 1;
+            _delay((unsigned long)((10)*(500000/4000.0)));
+
+
+
+
+        }
+        else{
             PORTBbits.RB5 = 0;
             _delay((unsigned long)((10)*(500000/4000.0)));
             PORTBbits.RB6 = 0;
             _delay((unsigned long)((10)*(500000/4000.0)));
-        }
 
-        if (wheel_flag_l == 1){
-            PORTDbits.RD4 = 1;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD5 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD6 = 1;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD7 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-        }
-        else if (wheel_flag_l == 2){
-            PORTDbits.RD4 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD5 = 1;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD6 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD7 = 1;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-        }
-        else{
-            PORTDbits.RD4 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD5 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD6 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
-            PORTDbits.RD7 = 0;
-            _delay((unsigned long)((10)*(500000/4000.0)));
+
+
+
         }
 
     }
